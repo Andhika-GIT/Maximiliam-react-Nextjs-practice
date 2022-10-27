@@ -31,7 +31,7 @@ export async function getStaticProps() {
 
       // this static generated page will be generated on the server again for every 10 second ( if there's any request )
       // so we can keep our website updated with the newest data
-      revalidate: 10,
+      revalidate: 10, // generated new static page for every 10 sec
     },
   };
 }
