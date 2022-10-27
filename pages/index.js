@@ -28,6 +28,10 @@ export async function getStaticProps() {
   return {
     props: {
       meetups: DUMMY_MEETUPS,
+
+      // this static generated page will be generated on the server again for every 10 second ( if there's any request )
+      // so we can keep our website updated with the newest data
+      revalidate: 10,
     },
   };
 }
