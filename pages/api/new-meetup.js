@@ -2,7 +2,7 @@
 
 import { MongoClient } from 'mongodb';
 
-const handler = async (res, req) => {
+const handler = async (req, res) => {
   if (req.method === 'POST') {
     // if we receive post request, run below
 
@@ -10,7 +10,8 @@ const handler = async (res, req) => {
     const data = req.body;
 
     // connect to our mongodb server
-    const client = await MongoClient.connect('mongodb+srv://Andhika:Lowjed026@cluster0.1ck4mzj.mongodb.net/meetups?retryWrites=true&w=majority');
+    const client = await MongoClient.connect('mongodb+srv://Andhika:MMmfGsbnaPpxPehq@cluster0.1ck4mzj.mongodb.net/?retryWrites=true&w=majority');
+
     const db = client.db();
 
     // get the collection ( collection -> like table in our table)
@@ -19,6 +20,8 @@ const handler = async (res, req) => {
     // insert one document into collection
     // document -> entries in table
     const result = await meetupsCollection.insertOne(data);
+
+    console.log(result);
 
     // close database connection
     client.close();
