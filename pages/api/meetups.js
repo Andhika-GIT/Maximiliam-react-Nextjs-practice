@@ -21,7 +21,7 @@ const handler = async (req, res) => {
 
   // sending the respond after request
   // define the status and sending json data ( like message and the data )
-  res.status(201).json({ message: 'meetup inserted!', meetups: meetups });
+  res.status(201).json({ message: 'successfully get meetups data', meetups: meetups });
 };
 
 export default handler;
