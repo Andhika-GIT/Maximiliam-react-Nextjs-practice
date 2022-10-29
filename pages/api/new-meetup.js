@@ -9,11 +9,16 @@ const handler = async (res, req) => {
     // create instance to store data
     const data = req.body;
 
-    // destruct all the incoming request data
-    const { title, image, address, description } = data;
-
     // connect to our mongodb server
-    MongoClient.connect('mongodb+srv://Andhika:Lowjed026@cluster0.1ck4mzj.mongodb.net/meetups?retryWrites=true&w=majority');
+    const client = await MongoClient.connect('mongodb+srv://Andhika:Lowjed026@cluster0.1ck4mzj.mongodb.net/meetups?retryWrites=true&w=majority');
+    const db = client.db();
+
+    // get the collection ( collection -> like table in our table)
+    const meetupsCollection = db.collection('meetups');
+
+    // insert one document into collection
+    // document -> entries in table
+    const result = await meetupsCollection.insertOne(data);
   }
 };
 
