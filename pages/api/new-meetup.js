@@ -19,6 +19,13 @@ const handler = async (res, req) => {
     // insert one document into collection
     // document -> entries in table
     const result = await meetupsCollection.insertOne(data);
+
+    // close database connection
+    client.close();
+
+    // sending the respond after request
+    // define the status and sending json data ( like message and the data )
+    res.status(201).json({ message: 'meetup inserted!' });
   }
 };
 
