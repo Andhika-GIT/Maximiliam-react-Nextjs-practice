@@ -39,11 +39,18 @@ const HomePage = (props) => {
 // }
 
 export async function getStaticProps() {
-  // fetch data from an API
+  // fetch data from our own api endpoint (/api/meetup)
+  const response = await fetch('http://localhost:3000/api/meetups');
+
+  const data = await response.json();
+
+  console.log(data);
+
+  const meetups = data.meetups;
 
   return {
     props: {
-      meetups: DUMMY_MEETUPS,
+      meetups: meetups,
 
       // this static generated page will be generated on the server again for every 10 second ( if there's any request )
       // so we can keep our website updated with the newest data
