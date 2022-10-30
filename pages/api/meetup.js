@@ -1,4 +1,4 @@
-// this trigger when request send to ->  /api/meetups
+// this trigger when request send to ->  /api/meetup
 
 import { MongoClient } from 'mongodb';
 
