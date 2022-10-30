@@ -1,11 +1,21 @@
 // our-domain.com/[meetupId] -> dynamic route params
 
+import Head from 'next/head';
+
 import { MongoClient, ObjectId } from 'mongodb';
 
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
 const MeetupDetails = (props) => {
-  return <MeetupDetail {...props.meetupData} />;
+  return (
+    <>
+      <Head>
+        <title>{props.meetupData.title}</title>
+        <meta name="description" content={props.meetupData.description} />
+      </Head>
+      <MeetupDetail {...props.meetupData} />
+    </>
+  );
 };
 
 // we need to use getStaticPaths if we're using getStaticProps for dynamic page
