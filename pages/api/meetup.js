@@ -10,6 +10,17 @@ const handler = async (req, res) => {
 
   // get the collection ( collection -> like table in our table)
   const meetupsCollection = db.collection('meetups');
+
+  // find or get the documents ( data ) in our collection ( table )
+  const meetups = await meetupsCollection
+    .find(
+      // filter criteria
+      {},
+
+      // find spesific document by using id
+      { _id: 1 }
+    )
+    .toArray();
 };
 
 export default handler;
