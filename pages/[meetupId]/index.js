@@ -1,5 +1,7 @@
 // our-domain.com/[meetupId] -> dynamic route params
 
+import { MongoClient } from 'mongodb';
+
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
 const MeetupDetails = () => {
@@ -32,22 +34,31 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  // fetch data for a single meetup
-
   // get the id or the dynamic params in url using context.params
   const meetupId = context.params.meetupId;
 
-  console.log(meetupId);
+  // fetch data for a single meetup
+
+  // connect to our mongodb server
+  const client = await MongoClient.connect('mongodb+srv://Andhika:MMmfGsbnaPpxPehq@cluster0.1ck4mzj.mongodb.net/?retryWrites=true&w=majority');
+
+  const db = client.db();
+
+  // get the collection ( collection -> like table in our table)
+  const meetupsCollection = db.collection('meetups');
+
+  // find or get the documents ( data ) in our collection ( table )
+  const selectedMeetup = await meetupsCollection.find(
+    // find the data based on the id that we got from parameter
+    { _id: meetupId }
+  );
+
+  console.log(selectedMeetup);
 
   return {
     props: {
-      meetupData: {
-        id: meetupId,
-        image: 'https://www.objective.com/assets/content/images/Resources/Blog-Articles/img-blog-PNC-meetup.png',
-        title: 'first Meetup',
-        address: 'some street 5, some city',
-        description: 'this is first meetup',
-      },
+      // use the selected meetup based on the param id
+      meetupData: selectedMeetup,
     },
   };
 }
