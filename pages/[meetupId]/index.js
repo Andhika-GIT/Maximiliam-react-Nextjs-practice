@@ -1,11 +1,11 @@
 // our-domain.com/[meetupId] -> dynamic route params
 
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 import MeetupDetail from '../../components/meetups/MeetupDetail';
 
-const MeetupDetails = () => {
-  return <MeetupDetail image="https://www.objective.com/assets/content/images/Resources/Blog-Articles/img-blog-PNC-meetup.png" title="first Meetup" address="some street 5, some city" description="this is first meetup" />;
+const MeetupDetails = (props) => {
+  return <MeetupDetail {...props.meetupData} />;
 };
 
 // we need to use getStaticPaths if we're using getStaticProps for dynamic page
@@ -48,9 +48,10 @@ export async function getStaticProps(context) {
   const meetupsCollection = db.collection('meetups');
 
   // find or get the documents ( data ) in our collection ( table )
-  const selectedMeetup = await meetupsCollection.find(
+  const selectedMeetup = await meetupsCollection.findOne(
     // find the data based on the id that we got from parameter
-    { _id: meetupId }
+    // Objectid to convert the string id into object so mongodb can read it
+    { _id: ObjectId(meetupId) }
   );
 
   console.log(selectedMeetup);
