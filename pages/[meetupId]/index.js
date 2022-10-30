@@ -8,23 +8,26 @@ const MeetupDetails = () => {
 
 // we need to use getStaticPaths if we're using getStaticProps for dynamic page
 export async function getStaticPaths() {
+  // fetch data from our own api endpoint (/api/meetup)
+  const response = await fetch('http://localhost:3000/api/meetup');
+
+  const data = await response.json();
+
+  console.log(data);
+
+  const meetups = data.meetups;
+
+  // use the _id property from meetups data to define the paths
+
   return {
     fallback: false,
-    paths: [
-      // we get the id meetup or dynamic params here
-
-      // later we will not hard code the id
-      {
-        params: {
-          meetupId: 'M1',
-        },
+    paths: meetups.map((meetup) => ({
+      // map all meetups data
+      params: {
+        // define the params using the id property that we got from /api/meetup
+        meetupId: meetup.id,
       },
-      {
-        params: {
-          meetupId: 'M2',
-        },
-      },
-    ],
+    })),
   };
 }
 
